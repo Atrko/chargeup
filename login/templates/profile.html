@@ -3,14 +3,208 @@
 <html lang="en">
 
 <head>
+    <!-- Title -->
     <title>ChargeUp Login</title>
+
+    <!-- Required Meta Tags Always Come First -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+
+
+    <!-- CSS Implementing Plugins -->
+    <link href="{% static 'css/all.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/hs-mega-menu.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/select2.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/quill.snow.css'%}" rel="stylesheet">
+
+    <!-- CSS Front Template -->
+    <link href="{% static 'css/theme.css'%}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-    <div class="w-100 d-inline-block" style="text-align: center; margin-top: 30px;">
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> 
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+ <!-- ========== HEADER ========== -->
+ <header id="header" class="header">
+     <!-- Search -->
+     <div id="searchPushTop" class="search-push-top">
+        <div class="container position-relative">
+            <div class="search-push-top-content pt-3">
+                <!-- Close Button -->
+                <div class="search-push-top-close-btn">
+                    <div class="hs-unfold">
+                        <a class="js-hs-unfold-invoker btn btn-icon btn-xs btn-soft-secondary mt-2 mr-2" href="javascript:;"
+                            data-hs-unfold-options='{
+                             "target": "#searchPushTop",
+                             "type": "jquery-slide",
+                             "contentSelector": ".search-push-top"
+                            }'>
+
+                            <svg width="10" height="10" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- End Close Button -->
+            </div>
+     </div>
+
+
+ </header>
+
+
+
+
+    <!-- ========== MAIN ========== -->
+    <main id="content" role="main" class="bg-light">
+        <!-- Breadcrumb Section -->
+
+        <div class="bg-navy" style="background-image: url('/static/svg/abstract-shapes-20.svg')">
+
+          <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+            <div class="row align-items-center">
+                <div class="col">
+                  <div class="d-none d-lg-block">
+                    <h1 class="h2 text-white">My ChargeUp Account</h1>
+                  </div>
+  
+                  <!-- Breadcrumb -->
+                  <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+                      <li class="breadcrumb-item">
+                          <a href="/home">Home</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                          Personal info
+                      </li>
+                  </ol>
+                  <!-- End Breadcrumb -->
+              </div>
+  
+              <div class="col-auto">
+                  <div class="d-none d-lg-block">
+                      <a class="btn btn-sm btn-soft-light" href="/logout">Log out</a>
+                  </div>
+              </div>              
+          </div>
+
+        </div>
+        </div>
+        <!-- End Breadcrumb Section -->
+
+        <!-- Content Section -->
+        <div class="container space-1 space-top-lg-0 mt-lg-n10">
+            <div class="col-lg-9">
+                <!-- Card -->
+                <div class="card mb-3 mb-lg-5">
+                    <div class="card-header">
+                        <h5 class="card-title">Basic info</h5>
+                    </div>
+    
+                    <!-- Body -->
+                    <div class="card-body">
+                        <form action='/update/{{user.id}}'  method='POST' enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% comment %} {{ form.media }} {% endcomment %}
+                            {{ form.as_p }}
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label class="col-sm-3 col-form-label input-label">Profile photo</label>
+
+                                <div class="col-sm-9">
+                                    <div class="media align-items-center">
+                                        <label class="avatar avatar-xl avatar-circle mr-4" for="avatarUploader">
+                                            <img id="avatarImg" class="avatar-img" src="/static/img/img1.jpg" alt="Image Description">
+                                        </label>
+
+                                        <div class="media-body">
+                                                <button class="btn btn-sm btn-primary file-attachment-btn mb-2 mb-sm-0 mr-2" type="submit">Upload Photo</button>
+                                        </div>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Full name <i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Displayed on public forums, such as Front."></i></label>
+    
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="{{ user.first_name }}"  value="{{ user.first_name }}">
+                                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="{{ user.last_name }}"  value="{{ user.last_name }}">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Form Group -->
+                            <div class="row form-group">
+                                <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="{{ user.email }}"  value="{{ user.email }}">
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+    
+                            <!-- Form Group -->
+                            <div class="js-add-field row form-group">
+                                <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Password </label>
+    
+                                <div class="col-sm-9">
+                                    <div class="input-group align-items-center">
+                                        <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
+                                        
+                                    </div>
+                                </div>
+                                <hr>
+    
+                            </div>
+                            <div class="js-add-field row form-group">
+                                <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Confirm Password </label>
+                                <div class="col-sm-9">
+                                    <div class="input-group align-items-center">
+                                        <input type="password" class="form-control" id="password" name="password" required placeholder="Confirm Password">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!-- Footer -->
+                        <div class="card-footer d-flex justify-content-end">
+                            <input type="submit" class="btn btn-primary" value="Update">
+                        </div>
+                        <!-- End Footer -->
+    
+    
+                        </form>
+                    </div>
+    
+
+                </div>
+                <!-- End Card -->
+    
+
+                </div>
+        </div>
+
+
+
+    
+
+    <!-- <div class="w-100 d-inline-block" style="text-align: center; margin-top: 30px;">
         <b style="font-size: 40px;">My ChargeUp Account</b><br>
         <ul class="navbar nav" style="justify-content: right;">
             <li class="nav-item">
@@ -51,7 +245,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
-    </div>
+    </div> -->
 </body>
 
 </html>

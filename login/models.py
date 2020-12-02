@@ -50,9 +50,14 @@ class UserManager(models.Manager):
 class User(models.Model):
     first_name = models.CharField(max_length=45, default=True)
     last_name = models.CharField(max_length=45, default=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     password = models.CharField(max_length=255)
+    title = models.TextField()
+    profile_pic = models.ImageField(default="default.png", null=True, blank=True, upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
+
+    # def __str__(self):
+    #     return self.title
